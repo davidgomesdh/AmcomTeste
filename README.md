@@ -23,7 +23,7 @@
 
 1. Clone este repositório:
    ```bash
-   git clone https://github.com/usuario/projeto.git
+   git clone https://github.com/davidgomesdh/AmcomTeste.git
 
 2. Entre no diretório do projeto:
   cd projeto
