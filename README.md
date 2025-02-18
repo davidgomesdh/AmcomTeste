@@ -93,14 +93,10 @@ curl --location 'http://localhost:5000/api/movimento' \
 ```
 *Resposta Esperada (Erro)*
 ```json
-curl --location 'http://localhost:5000/api/movimento' \
---header 'Content-Type: application/json' \
---data '{
-    "IdRequisicao": "123e4567-e89b-12d3-a456-426614174000",
-    "IdContaCorrente": "FA99D033-7067-ED11-96C6-7C5DFA4A16C9",
-    "TipoMovimento": "C",
-    "Valor": 150.00
-}'
+{
+    "message": "Requisição já realizada anteriormente.",
+    "tipoErro": "Idempotência"
+}
 ```
 
 3. Criar um Novo Movimento com IdRequisicao Diferente
@@ -144,6 +140,47 @@ curl --location 'http://localhost:5000/api/movimento' \
 {
     "message": "Conta não encontrada.",
     "tipoErro": "ContaInválida"
+}
+```
+
+5. Testar Valor Inválido
+Este endpoint valida o valor da movimentação. Se o valor informado for inválido (ex: negativo para crédito), a requisição falha.
+
+*Requisição*
+```bash
+curl --location 'http://localhost:5000/api/movimento' \
+--header 'Content-Type: application/json' \
+--data '{
+    "IdRequisicao": "456e1234-e21b-45d3-a123-426614174222",
+    "IdContaCorrente": "999",
+    "TipoMovimento": "C",
+    "Valor": 100.00
+}'
+```
+
+*Resposta Esperada (Erro)*
+```json
+{
+    "message": "Valor inválido.",
+    "tipoErro": "ValorInvalido"
+}
+```
+
+6. Consultar Saldo
+Esse endpoint permite consultar o saldo de uma conta corrente específica, fornecendo o IdContaCorrente.
+
+*Requisição*
+```bash
+curl --location 'http://localhost:5000/api/consultasaldo/FA99D033-7067-ED11-96C6-7C5DFA4A16C9'
+```
+
+*Resposta Esperada*
+```json
+{
+    "NumeroContaCorrente": "FA99D033-7067-ED11-96C6-7C5DFA4A16C9",
+    "NomeTitular": "João Silva",
+    "SaldoAtual": 1500.00,
+    "DataHoraConsulta": "2023-02-01T10:00:00"
 }
 ```
 
