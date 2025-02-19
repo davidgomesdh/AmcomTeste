@@ -42,6 +42,11 @@
 ## Uso
   Após executar a aplicação, você pode realizar requisições para os seguintes endpoints:
 
+  ```bash
+http://localhost:5000/api/movimento        -- POST
+http://localhost:5000/api/consultasaldo/   -- GET
+```
+
 ## Casos de uso
 Você pode colar os seguintes casos de uso no postman para testar:
 
@@ -73,13 +78,12 @@ Valor: Valor da movimentação.
 *Resposta Esperada (Sucesso)*
 ```json
 {
-    "Mensagem": "Movimento realizado com sucesso.",
     "IdMovimento": "uuid-do-movimento"
 }
 ```
 
 2. Repetir a Requisição com IdRequisicao Repetido
-Esse endpoint valida se a mesma requisição (IdRequisicao) foi realizada anteriormente. Se o IdRequisicao já foi utilizado, a movimentação será rejeitada.
+Esse endpoint valida se a mesma requisição (IdRequisicao) foi realizada anteriormente. Se o IdRequisicao já foi utilizado, a movimentação será rejeitada e exibirá o resultado obtido anteriormente pela IdRequisição correspondente.
 
 *Requisição*
 ```bash
@@ -92,11 +96,10 @@ curl --location 'http://localhost:5000/api/movimento' \
     "Valor": 150.00
 }'
 ```
-*Resposta Esperada (Erro)*
+*Resposta Esperada*
 ```json
 {
-    "message": "Requisição já realizada anteriormente.",
-    "tipoErro": "Idempotência"
+    "IdMovimento": "uuid-do-movimento"
 }
 ```
 
@@ -117,7 +120,6 @@ curl --location 'http://localhost:5000/api/movimento' \
 *Resposta Esperada (Sucesso)*
 ```json
 {
-    "Mensagem": "Movimento realizado com sucesso.",
     "IdMovimento": "uuid-do-movimento"
 }
 ```
@@ -139,8 +141,8 @@ curl --location 'http://localhost:5000/api/movimento' \
 *Resposta Esperada (Erro)*
 ```json
 {
-    "message": "Conta não encontrada.",
-    "tipoErro": "ContaInválida"
+    "message": "Apenas contas correntes cadastradas podem receber movimentação.",
+    "tipoErro": "INVALID_ACCOUNT"
 }
 ```
 
@@ -162,8 +164,8 @@ curl --location 'http://localhost:5000/api/movimento' \
 *Resposta Esperada (Erro)*
 ```json
 {
-    "message": "Valor inválido.",
-    "tipoErro": "ValorInvalido"
+    "message": "Apenas valores positivos podem ser recebidos.",
+    "tipoErro": "INVALID_VALUE"
 }
 ```
 
@@ -178,7 +180,7 @@ curl --location 'http://localhost:5000/api/consultasaldo/FA99D033-7067-ED11-96C6
 *Resposta Esperada*
 ```json
 {
-    "NumeroContaCorrente": "FA99D033-7067-ED11-96C6-7C5DFA4A16C9",
+    "NumeroContaCorrente": "111",
     "NomeTitular": "João Silva",
     "SaldoAtual": 1500.00,
     "DataHoraConsulta": "2023-02-01T10:00:00"
