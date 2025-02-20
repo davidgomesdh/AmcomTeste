@@ -234,7 +234,7 @@ Exemplo de configuração para o banco de dados:
   "DatabaseName": "Data Source=database.sqlite"
 }
 
-## **Autenticação e Autorização JWT**
+# **Autenticação e Autorização JWT**
 
 Agora que implementamos a autenticação e autorização usando JWT (JSON Web Token), é necessário fornecer um token válido para acessar as rotas protegidas da API. A seguir, explicamos como obter o token e utilizá-lo para fazer requisições autenticadas.
 
