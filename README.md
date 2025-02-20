@@ -7,6 +7,7 @@
 3. [Instalação](#instalação)
 4. [Uso](#uso)
 5. [Casos de Uso](#casos-de-uso)
+6. [Requisitos](#requisitos-para-rodar-o-sistema)
 
 ## Visão Geral
   Este é um serviço de API RESTful que permite consultar saldos de contas bancárias e realizar movimentações financeiras em um banco utilizando SQLite. A API oferece funcionalidades como consulta de saldo, criação de movimentos de débito e crédito, e controle de idempotência.
@@ -187,3 +188,36 @@ curl --location 'http://localhost:5000/api/consultasaldo/FA99D033-7067-ED11-96C6
 }
 ```
 
+# Requisitos para Rodar o Sistema
+
+Antes de iniciar o sistema, certifique-se de que os seguintes requisitos estejam atendidos:
+
+## 1. Ambiente de Desenvolvimento
+O sistema foi desenvolvido para rodar em um ambiente local de desenvolvimento. Você precisará dos seguintes itens para executar a aplicação:
+
+- **.NET 6.0 ou superior**: A aplicação é construída utilizando o framework .NET, portanto, você precisará ter o SDK do .NET instalado.
+  - Para instalar o .NET, visite [dotnet.microsoft.com](https://dotnet.microsoft.com/download).
+
+- **SQLite**: Utilizamos o SQLite como banco de dados local para armazenar as informações de movimentos e contas correntes.
+  - Não é necessário instalar nada manualmente para o SQLite, pois ele é utilizado como banco de dados em arquivo.
+
+- **Editor de Código**: Recomendamos o uso do [Visual Studio Code](https://code.visualstudio.com/) ou [Visual Studio](https://visualstudio.microsoft.com/) para uma melhor experiência de desenvolvimento. 
+
+## 2. Dependências de Pacotes
+
+Os seguintes pacotes NuGet são necessários para rodar o sistema. Eles serão instalados automaticamente quando você restaurar os pacotes:
+
+- **MediatR**: Para facilitar a comunicação entre diferentes camadas da aplicação.
+- **Microsoft.Data.Sqlite**: Para interação com o banco de dados SQLite.
+- **Swagger**: Para gerar documentação interativa da API (utilizando o pacote `Swashbuckle.AspNetCore`).
+
+## 3. Variáveis de Configuração
+
+A aplicação depende de algumas variáveis de configuração que são necessárias para seu correto funcionamento. As variáveis podem ser definidas no arquivo `appsettings.json` ou diretamente no ambiente de execução.
+
+Exemplo de configuração para o banco de dados:
+
+```json
+{
+  "DatabaseName": "Data Source=database.sqlite"
+}
