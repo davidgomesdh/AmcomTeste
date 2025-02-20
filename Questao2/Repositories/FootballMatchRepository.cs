@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Questao2.Models;
+﻿using Newtonsoft.Json;
 
 namespace Questao2.Repositories
 {
@@ -16,10 +10,10 @@ namespace Questao2.Repositories
         {
             int totalGoals = 0;
 
-            
+
             totalGoals += await GetGoalsFromTeam(team, year, "team1");
 
-            
+
             totalGoals += await GetGoalsFromTeam(team, year, "team2");
 
             return totalGoals;
@@ -34,31 +28,31 @@ namespace Questao2.Repositories
             {
                 while (true)
                 {
-                    
+
                     string url = $"https://jsonmock.hackerrank.com/api/football_matches?year={year}&page={page}&{teamPosition}={team}";
 
-                    
+
                     var response = await _httpClient.GetStringAsync(url);
 
-                    
+
                     var matchData = JsonConvert.DeserializeObject<ApiResponse>(response);
 
-                    
+
                     if (matchData == null || matchData.Data == null || matchData.Data.Count == 0)
                     {
                         break;
                     }
 
-                    
+
                     foreach (var match in matchData.Data)
                     {
                         if (teamPosition == "team1")
                         {
-                            totalGoals += Convert.ToInt32(match.Team1Goals); 
+                            totalGoals += Convert.ToInt32(match.Team1Goals);
                         }
                         else if (teamPosition == "team2")
                         {
-                            totalGoals += Convert.ToInt32(match.Team2Goals); 
+                            totalGoals += Convert.ToInt32(match.Team2Goals);
                         }
                     }
 
@@ -83,7 +77,7 @@ namespace Questao2.Repositories
     {
         public int Page { get; set; }
 
-        [JsonProperty("total_pages")] 
+        [JsonProperty("total_pages")]
         public int TotalPages { get; set; }
 
         public List<Match> Data { get; set; }
@@ -92,13 +86,13 @@ namespace Questao2.Repositories
     public class Match
     {
         public string Competition { get; set; }
-        public string Year { get; set; }  
+        public string Year { get; set; }
         public string Round { get; set; }
 
-        public string Team1 { get; set; } 
-        public string Team1Goals { get; set; } 
+        public string Team1 { get; set; }
+        public string Team1Goals { get; set; }
 
         public string Team2 { get; set; }
-        public string Team2Goals { get; set; } 
+        public string Team2Goals { get; set; }
     }
 }
