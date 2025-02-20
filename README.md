@@ -1,4 +1,10 @@
 ### Resposta da QUESTÃO 5
+
+### IMPORTANTE, NOTAS DE ATUALIZAÇÃO DE MELHORIAS
+- Adicionado validação no request utilizando Data Annotations
+- Adiconado logs utilizando Serilog
+- Adicionado authorização e autenticação utilizando JWT Bearer
+
 # Sistema de Consultas de Saldo de Contas Bancárias
 
 ## Índice
@@ -8,6 +14,7 @@
 4. [Uso](#uso)
 5. [Casos de Uso](#casos-de-uso)
 6. [Requisitos](#requisitos-para-rodar-o-sistema)
+7. [IMPORTANTE SOBRE AUTENTICAÇÃO](autenticação)
 
 ## Visão Geral
   Este é um serviço de API RESTful que permite consultar saldos de contas bancárias e realizar movimentações financeiras em um banco utilizando SQLite. A API oferece funcionalidades como consulta de saldo, criação de movimentos de débito e crédito, e controle de idempotência.
@@ -221,3 +228,60 @@ Exemplo de configuração para o banco de dados:
 {
   "DatabaseName": "Data Source=database.sqlite"
 }
+
+```
+{
+  "DatabaseName": "Data Source=database.sqlite"
+}
+
+## **Autenticação e Autorização JWT**
+
+Agora que implementamos a autenticação e autorização usando JWT (JSON Web Token), é necessário fornecer um token válido para acessar as rotas protegidas da API. A seguir, explicamos como obter o token e utilizá-lo para fazer requisições autenticadas.
+
+### **1. Obtendo o Token de Autenticação**
+
+Para obter um token JWT, você deve fazer uma requisição POST para o endpoint de login da API com as credenciais de usuário. O endpoint de login pode ser algo como:
+
+## IMPORTANTE - UTILIZE user e password para ser autenticado
+
+*Exemplo de Requisição:*
+```http
+POST /api/auth/login
+curl --location --request POST 'http://localhost:5000/api/auth/login' \
+--header 'Content-Type: application/json' \
+--data '{
+    "username": "user",
+    "password": "password"
+}'
+
+```
+
+*Resposta Esperada:*
+```json
+{
+    "token": "seuTokenJwtAqui"
+}
+```
+
+### **1. Utilizando o Token para Acessar Endpoints Protegidos**
+
+Após obter o token JWT, você pode usá-lo para acessar os endpoints protegidos da API. Para isso, basta adicionar o token no cabeçalho da requisição como um Bearer Token.
+
+*Exemplo de Requisição para Acessar um Endpoint Protegido:*
+```http
+curl --location --request GET 'http://localhost:5000/api/consultasaldo/FA99D033-7067-ED11-96C6-7C5DFA4A16C9' \
+--header 'Authorization: Bearer seuTokenJwtAqui'
+
+```
+### **3. Erros Comuns**
+- [Token Expirado:] Se o token expirou, você receberá o status 401 Unauthorized e precisará se autenticar novamente.
+- [Token Inválido:] Caso o token seja inválido ou malformado, o status 400 Bad Request será retornado, indicando que o token não pode ser processado.
+
+### **4. Expiração do Token**
+A expiração do token é configurada no backend e pode ser verificada em cada token JWT através da sua payload. Quando o token expirar, você precisará fazer login novamente para obter um novo token.
+
+### **5. Autorização de Acesso**
+Alguns endpoints da API podem ter restrições de autorização baseadas em papéis ou permissões (roles). Para acessar essas rotas, você precisa garantir que seu token JWT inclua as permissões necessárias. A autorização pode ser configurada em diferentes níveis de segurança no backend.
+
+Por exemplo, se um endpoint for acessível apenas por usuários com a role "Admin", o sistema verificará a presença dessa role no token antes de permitir o acesso.
+
