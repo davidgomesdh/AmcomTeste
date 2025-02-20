@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Questao5.Application.Commands.Requests;
 using Questao5.Application.Commands.Responses;
@@ -26,6 +27,7 @@ namespace Questao5.API
         /// <response code="200">Movimentação realizada com sucesso.</response>
         /// <response code="400">Se a movimentação for inválida.</response>
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> MovimentarConta([FromBody] MovimentarContaRequest request)
         {
             _logger.LogInformation("Requisição recebida para movimentar conta: {IdContaCorrente} | Horário: {HoraRecebimento}", request.IdContaCorrente, DateTime.Now);

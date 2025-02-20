@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Questao5.Application.Queries;
 using Questao5.Application.Queries.Requests;
@@ -26,6 +27,7 @@ namespace Questao5.API
         /// <response code="200">Retorna os detalhes da conta com o saldo atual.</response>
         /// <response code="400">Se a conta estiver inativa ou não existir.</response>
         [HttpGet("{idContaCorrente}")]
+        [Authorize]
         public async Task<IActionResult> ConsultarSaldo(string idContaCorrente)
         {
             _logger.LogInformation("Consulta de saldo solicitada para a conta: {IdContaCorrente} | Horário: {HoraRecebimento}", idContaCorrente, DateTime.Now);
