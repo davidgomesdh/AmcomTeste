@@ -14,7 +14,7 @@
 4. [Uso](#uso)
 5. [Casos de Uso](#casos-de-uso)
 6. [Requisitos](#requisitos-para-rodar-o-sistema)
-7. [IMPORTANTE SOBRE AUTENTICAÇÃO](autenticação)
+7. [IMPORTANTE SOBRE AUTENTICAÇÃO](autenticação-e-Autorização-JWT)
 
 ## Visão Geral
   Este é um serviço de API RESTful que permite consultar saldos de contas bancárias e realizar movimentações financeiras em um banco utilizando SQLite. A API oferece funcionalidades como consulta de saldo, criação de movimentos de débito e crédito, e controle de idempotência.
