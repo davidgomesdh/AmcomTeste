@@ -10,10 +10,12 @@ namespace Questao5.API
     public class ConsultaSaldoController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly ILogger<MovimentoController> _logger;
 
-        public ConsultaSaldoController(IMediator mediator)
+        public ConsultaSaldoController(IMediator mediator, ILogger<MovimentoController> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
         /// <summary>
@@ -26,6 +28,8 @@ namespace Questao5.API
         [HttpGet("{idContaCorrente}")]
         public async Task<IActionResult> ConsultarSaldo(string idContaCorrente)
         {
+            _logger.LogInformation("Consulta de saldo solicitada para a conta: {IdContaCorrente} | Horário: {HoraRecebimento}", idContaCorrente, DateTime.Now);
+
             ConsultarSaldoResponse result = (ConsultarSaldoResponse)await _mediator.Send(new ConsultarSaldoRequest { IdContaCorrente = idContaCorrente });
 
             if (!result.IsSuccess)

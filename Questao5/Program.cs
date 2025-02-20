@@ -5,6 +5,7 @@ using Microsoft.Data.Sqlite;
 using Questao5.Infrastructure.Data.Interfaces;
 using Questao5.Infrastructure.Data.Repositories;
 using Questao5.Infrastructure.Sqlite;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,10 @@ builder.Services.AddScoped<IMovimentoRepository, MovimentoRepository>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Host.UseSerilog((ctx, lc) => lc
+    .WriteTo.Console()
+    .WriteTo.File("Logs/log.txt", rollingInterval: RollingInterval.Day));
 
 var app = builder.Build();
 

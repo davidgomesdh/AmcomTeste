@@ -10,10 +10,12 @@ namespace Questao5.API
     public class MovimentoController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly ILogger<MovimentoController> _logger;
 
-        public MovimentoController(IMediator mediator)
+        public MovimentoController(IMediator mediator, ILogger<MovimentoController> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
         /// <summary>
@@ -26,6 +28,8 @@ namespace Questao5.API
         [HttpPost]
         public async Task<IActionResult> MovimentarConta([FromBody] MovimentarContaRequest request)
         {
+            _logger.LogInformation("Requisição recebida para movimentar conta: {IdContaCorrente} | Horário: {HoraRecebimento}", request.IdContaCorrente, DateTime.Now);
+
             var result = (MovimentarContaResponse)await _mediator.Send(request);
 
             if (!result.IsSuccess)
