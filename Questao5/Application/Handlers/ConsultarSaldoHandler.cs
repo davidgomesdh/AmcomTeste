@@ -21,7 +21,7 @@ namespace Questao5.Application.Handlers
             var conta = await _contaCorrenteRepository.ObterPorId(request.IdContaCorrente);
 
             if (conta == null)
-                return new ConsultarSaldoResponse {IsSuccess = false, ErrorMessage = "INVALID_ACCOUNT", ErrorType = "INVALID_ACCOUNT" };
+                return new ConsultarSaldoResponse { IsSuccess = false, ErrorMessage = "INVALID_ACCOUNT", ErrorType = "INVALID_ACCOUNT" };
 
             if (conta.Ativo == 0)
                 return new ConsultarSaldoResponse { IsSuccess = false, ErrorMessage = "INACTIVE_ACCOUNT", ErrorType = "INACTIVE_ACCOUNT" };
@@ -33,7 +33,7 @@ namespace Questao5.Application.Handlers
 
             return new ConsultarSaldoResponse
             {
-                IsSuccess = true,   
+                IsSuccess = true,
                 NumeroContaCorrente = conta.Numero.ToString(),
                 NomeTitular = conta.Nome,
                 SaldoAtual = saldoAtual,

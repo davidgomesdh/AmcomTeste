@@ -1,10 +1,9 @@
-﻿using MediatR;
-using Questao5.Application.Commands.Responses;
-using Questao5.Application.Commands;
-using Questao5.Infrastructure.Data.Interfaces;
-using Questao5.Domain.Entities;
-using System.Text.Json;
+﻿using System.Text.Json;
+using MediatR;
 using Questao5.Application.Commands.Requests;
+using Questao5.Application.Commands.Responses;
+using Questao5.Domain.Entities;
+using Questao5.Infrastructure.Data.Interfaces;
 
 namespace Questao5.Application.Handlers
 {
@@ -27,12 +26,12 @@ namespace Questao5.Application.Handlers
             if (resultadoExistente != null)
             {
                 return JsonSerializer.Deserialize<MovimentarContaResponse>(resultadoExistente);
-            }           
+            }
 
             var conta = await _contaCorrenteRepository.ObterPorId(request.IdContaCorrente);
 
             if (conta == null)
-                return new MovimentarContaResponse { IsSuccess = false, ErrorMessage = "Apenas contas correntes cadastradas podem receber movimentação", ErrorType = "INVALID_ACCOUNT"};
+                return new MovimentarContaResponse { IsSuccess = false, ErrorMessage = "Apenas contas correntes cadastradas podem receber movimentação", ErrorType = "INVALID_ACCOUNT" };
 
             if (conta.Ativo == 0)
                 return new MovimentarContaResponse { IsSuccess = false, ErrorMessage = "Apenas contas correntes ativas podem receber movimentação", ErrorType = "INACTIVE_ACCOUNT" };
@@ -63,7 +62,7 @@ namespace Questao5.Application.Handlers
                     Status = "SUCCESS"
                 };
 
-                await _idempotenciaRepository.Salvar(Guid.NewGuid().ToString() ,request.IdRequisicao, JsonSerializer.Serialize(response));
+                await _idempotenciaRepository.Salvar(Guid.NewGuid().ToString(), request.IdRequisicao, JsonSerializer.Serialize(response));
 
                 return response;
             }
@@ -75,7 +74,7 @@ namespace Questao5.Application.Handlers
                     Status = "ERROR",
                     ErrorMessage = $"Erro ao processar a movimentação: {ex.Message}"
                 };
-            }            
+            }
         }
     }
 }

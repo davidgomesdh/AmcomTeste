@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Questao2.Repositories;
+﻿using Questao2.Repositories;
 using Questao2.Services;
 
 public class Program
@@ -12,7 +11,7 @@ public class Program
         int year = 2013;
         int totalGoals = await getTotalScoredGoals(teamName, year);
 
-        Console.WriteLine("Team "+ teamName +" scored "+ totalGoals.ToString() + " goals in "+ year);
+        Console.WriteLine("Team " + teamName + " scored " + totalGoals.ToString() + " goals in " + year);
 
         teamName = "Chelsea";
         year = 2014;

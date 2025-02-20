@@ -2,7 +2,8 @@
 
 namespace Questao1
 {
-    class ContaBancaria {
+    class ContaBancaria
+    {
 
         public int Numero { get; }
         private string _titular;

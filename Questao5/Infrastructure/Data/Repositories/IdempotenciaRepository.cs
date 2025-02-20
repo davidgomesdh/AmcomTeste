@@ -1,6 +1,6 @@
-﻿using Dapper;
+﻿using System.Data;
+using Dapper;
 using Questao5.Infrastructure.Data.Interfaces;
-using System.Data;
 
 namespace Questao5.Infrastructure.Data.Repositories
 {

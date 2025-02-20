@@ -1,10 +1,10 @@
+using System.Data;
+using System.Reflection;
 using MediatR;
 using Microsoft.Data.Sqlite;
 using Questao5.Infrastructure.Data.Interfaces;
 using Questao5.Infrastructure.Data.Repositories;
 using Questao5.Infrastructure.Sqlite;
-using System.Data;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 

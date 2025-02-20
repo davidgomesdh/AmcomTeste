@@ -1,7 +1,6 @@
 ﻿using System.Text.Json;
 using FluentAssertions;
 using NSubstitute;
-using NSubstitute.ExceptionExtensions;
 using Questao5.Application.Commands.Requests;
 using Questao5.Application.Commands.Responses;
 using Questao5.Application.Handlers;
@@ -39,7 +38,7 @@ namespace Questao5.Tests
             };
 
             var idempotenciaResponse = new MovimentarContaResponse
-            {                
+            {
                 IsSuccess = true,
                 IdMovimento = "movimento1",
                 Status = "SUCCESS"

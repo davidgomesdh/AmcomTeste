@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Questao5.Application.Queries.Requests;
 using Questao5.Application.Queries;
+using Questao5.Application.Queries.Requests;
 
 namespace Questao5.API
 {
